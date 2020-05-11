@@ -1,0 +1,10 @@
+.*
+!.gitignore
+*.pyc
+*~
+__py*
+*.toml
+*.log
+*.pid
+*.rdb
+
