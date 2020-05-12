@@ -8,7 +8,7 @@ CREATE TABLE proxy_locations (
        name varchar(256) UNIQUE NOT NULL,
        code varchar(4) UNIQUE NOT NULL);
 
-CREATE TABLE proxy_providers (
+CREATE TABLE providers (
        id serial PRIMARY KEY,
        name varchar(256) UNIQUE NOT NULL,
        url varchar(1024),
@@ -16,7 +16,7 @@ CREATE TABLE proxy_providers (
 
 CREATE TABLE provider_plans (
        id serial PRIMARY KEY,
-       provider_id integer NOT NULL REFERENCES proxy_providers (id) ON DELETE CASCADE,
+       provider_id integer NOT NULL REFERENCES providers (id) ON DELETE CASCADE,
        name varchar(256) NOT NULL,
        code varchar(8) UNIQUE NOT NULL,
        UNIQUE (provider_id, name));
@@ -30,15 +30,16 @@ CREATE TABLE proxies (
        active boolean DEFAULT TRUE,
        proxy_type_id integer NOT NULL REFERENCES proxy_types (id) ON DELETE RESTRICT,
        proxy_location_id integer REFERENCES proxy_locations (id) ON DELETE SET NULL,
-       proxy_provider_id integer REFERENCES proxy_providers (id) ON DELETE SET NULL,
+       provider_id integer REFERENCES providers (id) ON DELETE SET NULL,
        provider_plan_id integer REFERENCES provider_plans (id) ON DELETE SET NULL,
        tor_control_port integer,
-       tor_control_pswd integer,
-       tor_renew_identity boolean DEFAULT FALSE);
+       tor_control_pswd text,
+       tor_renew_identity boolean DEFAULT FALSE,
+       dont_block boolean DEFAULT FALSE);
 
 CREATE INDEX proxies_proxy_type_id_ix ON proxies (proxy_type_id);
 CREATE INDEX proxies_proxy_location_id_ix ON proxies (proxy_location_id) WHERE proxy_location_id IS NOT NULL;
-CREATE INDEX proxies_proxy_provider_id_ix ON proxies (proxy_provider_id) WHERE proxy_provider_id IS NOT NULL;
+CREATE INDEX proxies_proxy_provider_id_ix ON proxies (provider_id) WHERE provider_id IS NOT NULL;
 CREATE INDEX proxies_provider_plan_id_ix ON proxies (provider_plan_id) WHERE provider_plan_id IS NOT NULL;
 
 CREATE TABLE targets (
@@ -46,3 +47,17 @@ CREATE TABLE targets (
        domain varchar(1024) UNIQUE NOT NULL,
        identifier varchar(1024) UNIQUE,
        blocked_standby integer NOT NULL DEFAULT 720);
+
+CREATE TABLE target_providers (
+       id serial PRIMARY KEY,
+       target_id integer NOT NULL REFERENCES targets (id) ON DELETE CASCADE,
+       provider_id integer NOT NULL REFERENCES providers (id) ON DELETE CASCADE);
+
+CREATE INDEX target_proxy_providers_target_id_ix ON target_proxy_providers (target_id);
+
+CREATE TABLE target_provider_plans (
+       id serial PRIMARY KEY,
+       target_id integer NOT NULL REFERENCES targets (id) ON DELETE CASCADE,
+       provider_plan_id integer NOT NULL REFERENCES provider_plans (id) ON DELETE CASCADE);
+
+CREATE INDEX target_provider_plans_target_id_ix ON target_provider_plans (target_id);

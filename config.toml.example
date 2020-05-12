@@ -1,0 +1,12 @@
+[database]
+
+    [database.postgres]
+    uri = "postgresql://pservice:1234@localhost:5432/proxy_service"
+
+    [database.redis]
+    uri = "redis://localhost:9189"
+    pool_min = 10
+    pool_max = 50
+
+[pool]
+length = 25

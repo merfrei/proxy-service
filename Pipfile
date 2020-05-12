@@ -5,6 +5,7 @@ name = "pypi"
 
 [dev-packages]
 pylint = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.7"

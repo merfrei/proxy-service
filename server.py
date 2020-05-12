@@ -5,6 +5,7 @@ This is the main AIOHTTP server for the Proxy Service API
 import asyncio
 import argparse
 from aiohttp import web
+from config import get_config
 from api import init_app
 
 
@@ -21,8 +22,9 @@ def parse_arguments():
 
 def run_server():
     '''Run the main aiohttp server'''
+    config = get_config()
     loop = asyncio.get_event_loop()
-    app = loop.run_until_complete(init_app(loop))
+    app = loop.run_until_complete(init_app(loop, config))
     args = parse_arguments()
     web.run_app(app, path=args.path, port=args.port)
 

@@ -6,7 +6,7 @@ from api.handlers.base import get_base_get
 from api.handlers.base import get_base_post
 from api.handlers.base import get_base_put
 from api.handlers.base import get_base_delete
-from api.model.target import TargetDB
+from api.models.target import TargetDB
 
 
 async def get_handler(request):

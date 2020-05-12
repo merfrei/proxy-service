@@ -6,7 +6,7 @@ from api.handlers.base import get_base_get
 from api.handlers.base import get_base_post
 from api.handlers.base import get_base_put
 from api.handlers.base import get_base_delete
-from api.model.proxy import ProxyDB
+from api.models.proxy import ProxyDB
 
 
 async def get_handler(request):

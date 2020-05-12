@@ -7,14 +7,13 @@ Main app
 import aioredis
 import asyncpg
 from aiohttp import web
-from config import get_config
 from api.routes import init_routes
 
 
-async def init_app(loop):
+async def init_app(loop, config):
     '''Init aiohttp app'''
-    config = get_config()
     app = web.Application()
+    app['config'] = config
 
     # Create a database connection pool
     app['pool'] = await asyncpg.create_pool(config['database']['postgres']['uri'])
