@@ -1,20 +1,24 @@
 CREATE TABLE proxy_types (
        id serial PRIMARY KEY,
-       name varchar(20) UNIQUE NOT NULL);
+       name varchar(20) UNIQUE NOT NULL,
+       code varchar(4) UNIQUE NOT NULL);
 
 CREATE TABLE proxy_locations (
        id serial PRIMARY KEY,
-       name varchar(8) UNIQUE NOT NULL);
+       name varchar(256) UNIQUE NOT NULL,
+       code varchar(4) UNIQUE NOT NULL);
 
 CREATE TABLE proxy_providers (
        id serial PRIMARY KEY,
        name varchar(256) UNIQUE NOT NULL,
-       url varchar(1024));
+       url varchar(1024),
+       code varchar(8) UNIQUE NOT NULL);
 
 CREATE TABLE provider_plans (
        id serial PRIMARY KEY,
        provider_id integer NOT NULL REFERENCES proxy_providers (id) ON DELETE CASCADE,
        name varchar(256) NOT NULL,
+       code varchar(8) UNIQUE NOT NULL,
        UNIQUE (provider_id, name));
 
 CREATE INDEX provider_plans_provider_id_ix ON provider_plans (provider_id);
