@@ -53,7 +53,7 @@ CREATE TABLE target_providers (
        target_id integer NOT NULL REFERENCES targets (id) ON DELETE CASCADE,
        provider_id integer NOT NULL REFERENCES providers (id) ON DELETE CASCADE);
 
-CREATE INDEX target_proxy_providers_target_id_ix ON target_proxy_providers (target_id);
+CREATE INDEX target_providers_target_id_ix ON target_providers (target_id);
 
 CREATE TABLE target_provider_plans (
        id serial PRIMARY KEY,

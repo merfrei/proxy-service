@@ -2,7 +2,7 @@
 DB operations for Providers
 """
 
-from api.model.base import DBModel
+from api.models.base import DBModel
 
 
 class ProviderDB(DBModel):

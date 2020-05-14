@@ -2,7 +2,7 @@
 DB operations for Targets
 """
 
-from api.model.base import DBModel
+from api.models.base import DBModel
 
 
 class TargetDB(DBModel):

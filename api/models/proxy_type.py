@@ -2,7 +2,7 @@
 DB operations for Proxy Types
 """
 
-from api.model.base import DBModel
+from api.models.base import DBModel
 
 
 class ProxyTypeDB(DBModel):

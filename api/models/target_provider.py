@@ -2,7 +2,7 @@
 DB operations for Target Providers relation
 """
 
-from api.model.base import DBModel
+from api.models.base import DBModel
 
 
 class TargetProviderDB(DBModel):
