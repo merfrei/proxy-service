@@ -6,14 +6,14 @@ It allows mark some proxies as blocked and ignore them for a period of time (con
 
 It stores some stats in a Redis database as well
 
-Some other features too:
+Some other features:
 
 - Set and return proxies by location
 
-- Specify proxy providers
+- Add proxy providers
 
-- Specify proxy types and return only proxies of a specific type
+- Add proxy types and return only proxies of a specific type
 
 - Support for Tor. Option to try a different exit node after being blocked
 
-- Support for backconnect proxies. If they are an automatic rotation service then it will not ignore that proxy after mark that as blocked
+- Support for backconnect proxies. If they are an automatic rotation service then it will never ignore that gateway as it does for static proxies (optional)
