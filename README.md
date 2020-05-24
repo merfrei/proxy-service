@@ -1,6 +1,6 @@
 ## Proxy Service API
 
-Given a pull of proxies and a target/website it will return a list of proxies
+Given a pool of proxies and a target/website it will return a list of proxies
 
 It allows mark some proxies as blocked and ignore them for a period of time (configurable)
 
