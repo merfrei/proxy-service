@@ -11,7 +11,11 @@ from api.models.target_provider_plan import TargetProviderPlanDB
 
 async def get_handler(request):
     '''GET one or more target provider plan relations'''
-    result = await get_base_get(TargetProviderPlanDB)(request)
+    where_query = []
+    if 'target_id' in request.query:
+        where_query.append(
+            ('target_id', '=', int(request.query['target_id'])))
+    result = await get_base_get(TargetProviderPlanDB, *where_query)(request)
     return result
 
 

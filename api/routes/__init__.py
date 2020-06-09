@@ -8,6 +8,8 @@ from api.routes.proxy_type import init_proxy_type_routes
 from api.routes.proxy_location import init_proxy_location_routes
 from api.routes.provider import init_provider_routes
 from api.routes.provider_plan import init_provider_plan_routes
+from api.routes.target_provider import init_target_provider_routes
+from api.routes.target_provider_plan import init_target_provider_plan_routes
 
 
 def init_routes(app):
@@ -23,3 +25,5 @@ def init_routes(app):
     init_proxy_location_routes(app)
     init_provider_routes(app)
     init_provider_plan_routes(app)
+    init_target_provider_routes(app)
+    init_target_provider_plan_routes(app)
