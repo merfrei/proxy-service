@@ -53,7 +53,8 @@ class ProxyPool:
         for proxy_id in available_ids:
             proxy_blocked = await self.is_blocked(proxy_id)
             if proxy_blocked:
-                blocked_ids.add(proxy_id)
+                if not proxy_map[proxy_id]['dont_block']:
+                    blocked_ids.add(proxy_id)
         if blocked_ids:
             available_ids = available_ids - blocked_ids
         if len(available_ids) < self.pool_len:
@@ -67,8 +68,10 @@ class ProxyPool:
                 for blocked_id in added_ids:
                     await self.unblock_proxy(blocked_id)
         for proxy_id in available_ids:
-            self.pool.append(proxy_map[proxy_id])
-            await self.set_as_used(proxy_id)
+            # Some previous filters can exclude proxies
+            if proxy_id in proxy_map:
+                self.pool.append(proxy_map[proxy_id])
+                await self.set_as_used(proxy_id)
 
     def fill_pool_ids(self, pool_set, ids_set):
         '''Given an input pool set and a second pool with optional proxy ids

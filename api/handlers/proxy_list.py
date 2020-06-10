@@ -16,7 +16,6 @@ Some targets may not have permission to use some providers and plans
 """
 
 from aiohttp import web
-from api.handlers.base import get_404_response
 from api.models.target import TargetDB
 from api.models.target_provider import TargetProviderDB
 from api.models.target_provider_plan import TargetProviderPlanDB
@@ -90,12 +89,12 @@ async def add_target_restriction_to_where(request, target_id, where, column_name
     '''Check if there are any restrictions for the Target given a model
     Add them to the where if any'''
     model_inst = model_db(request.app)
-    results = await model_inst.select(*['target_id', '=', int(target_id)], columns=column_name)
+    results = await model_inst.select(*[('target_id', '=', int(target_id))], columns=column_name)
     if results:
-        where.append((column_name, 'in', [row['id'] for row in results]))
+        where.append((column_name, 'in', [row[column_name] for row in results]))
 
 
-async def get_blocked_proxy_ids(request):
+def get_blocked_proxy_ids(request):
     '''Read the request.query data and returns the blocked IDs presents there if any'''
     blocked_ids = []
     blocked_data_str = request.query.get('blocked')
@@ -107,7 +106,7 @@ async def get_blocked_proxy_ids(request):
 async def get_target_data(request, target_id: int):
     '''It returns the data in database for the Target with ID <target_id>'''
     target_db = TargetDB(request.app)
-    target_data = await target_db.select_one(*['id', '=', target_id])
+    target_data = await target_db.select_one(*[('id', '=', target_id)])
     return target_data
 
 
@@ -117,7 +116,10 @@ async def get_handler(request):
     target_identifier = request.match_info.get('tid')
     target_id = await get_target_id_from_identifier(request, target_identifier)
     if target_id is None:
-        return get_404_response()
+        return web.json_response({
+            'message': 'Target "{}" does not exist'.format(target_identifier),
+            'data': {},
+            'status': 'not found'}, status=404)
     target_data = await get_target_data(request, target_id)  # Target DB data
     pool_length = int(request.query.get('len', config['pool']['length']))  # List length
     blocked_ids = get_blocked_proxy_ids(request) # Blocked proxies to be added
