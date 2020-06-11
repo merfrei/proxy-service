@@ -5,6 +5,8 @@ api_key = "ong0noo7ichoe>H5ahh7"
 
     [database.postgres]
     uri = "postgresql://pservice:1234@localhost:5432/proxy_service"
+    pool_min = 10
+    pool_max = 50
 
     [database.redis]
     uri = "redis://localhost:9189"
