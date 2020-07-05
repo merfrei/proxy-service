@@ -17,3 +17,7 @@ toml = "*"
 
 [packages.aiohttp]
 extras = [ "speedups",]
+
+[packages.asyncpg-connect]
+git = "https://github.com/merfrei/asyncpg-connect.git"
+editable = true

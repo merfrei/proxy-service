@@ -15,3 +15,7 @@ api_key = "ong0noo7ichoe>H5ahh7"
 
 [pool]
 length = 25
+
+[mpp]
+api_url = "https://api.myprivateproxy.net/v1/fetchProxies/json/full/showLocation/mysupersecretkey"
+plan_code = "MPP_PLAN"
