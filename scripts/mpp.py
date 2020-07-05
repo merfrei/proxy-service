@@ -35,9 +35,9 @@ async def update_mpp_list(api_url, plan_code, db_session):
     if plan is None:
         logging.error('Plan "%s" does not exist', plan_code)
         return
-    # Inactive old proxies
+    # Remove old proxies
     await db_session.connection.fetchval(
-        'UPDATE proxies SET active = false WHERE provider_plan_id = $1', plan['id'])
+        'DELETE proxies WHERE provider_plan_id = $1', plan['id'])
     # Useful data for relations
     proxy_type_id = await db_session.connection.fetchval(
         'SELECT id FROM proxy_types WHERE code = $1', 'PRV')  # Get proxy type ID
