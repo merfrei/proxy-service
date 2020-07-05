@@ -30,7 +30,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.NOTSET)
 
 async def update_mpp_list(api_url, plan_code, db_session):
     # Get plan
-    plan = await db_session.connection.fecthrow(
+    plan = await db_session.connection.fetchrow(
         'SELECT * FROM provider_plans WHERE code = $1', plan_code)
     if plan is None:
         logging.error('Plan "%s" does not exist', plan_code)
