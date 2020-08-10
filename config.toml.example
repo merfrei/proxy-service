@@ -1,5 +1,10 @@
 [api]
+auth_method = "key"
 api_key = "ong0noo7ichoe>H5ahh7"
+
+[security]
+secret_key = "7zk7aqa=ff+!tz!ssq9!h4cfe0!=euwv1&hi@94_5k3#w!9lpf"
+token_expires_in = 600
 
 [database]
 

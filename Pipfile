@@ -15,6 +15,8 @@ aioredis = "*"
 asyncpg = "*"
 toml = "*"
 requests = "*"
+passlib = "*"
+itsdangerous = "*"
 
 [packages.aiohttp]
 extras = [ "speedups",]

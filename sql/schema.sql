@@ -1,3 +1,8 @@
+CREATE TABLE users (
+       id serial PRIMARY KEY,
+       username varchar(32) UNIQUE NOT NULL,
+       password varchar(128) NOT NULL);
+
 CREATE TABLE proxy_types (
        id serial PRIMARY KEY,
        name varchar(20) UNIQUE NOT NULL,

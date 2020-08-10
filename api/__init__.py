@@ -9,6 +9,7 @@ from aiohttp import web
 import aioredis
 from api.routes import init_routes
 from api.auth import apikey_middleware
+from api.auth import basicauth_token_middleware
 
 
 def load_api_keys(app, config):
@@ -24,9 +25,16 @@ def load_api_keys(app, config):
 
 async def init_app(loop, config):
     '''Init aiohttp app'''
-    app = web.Application(middlewares=[apikey_middleware])
+    auth_method = config['api'].get('auth_method', 'key')  # Default auth method is `key`
+    if auth_method == 'key':
+        app = web.Application(middlewares=[apikey_middleware])
+        load_api_keys(app, config)
+    elif auth_method == 'token':
+        app = web.Application(middlewares=[basicauth_token_middleware])
+    else:
+        app = web.Application()  # Authentication disabled
+
     app['config'] = config
-    load_api_keys(app, config)
 
     # Create a database connection pool
     app['pool'] = await asyncpg.create_pool(
