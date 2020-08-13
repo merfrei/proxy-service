@@ -66,3 +66,22 @@ CREATE TABLE target_provider_plans (
        provider_plan_id integer NOT NULL REFERENCES provider_plans (id) ON DELETE CASCADE);
 
 CREATE INDEX target_provider_plans_target_id_ix ON target_provider_plans (target_id);
+
+
+-- Views
+
+CREATE VIEW provider_plans_view AS
+    SELECT plan.id, plan.code, plan.provider_id, prov.name as "provider_desc", plan.name
+    FROM provider_plans plan JOIN providers prov ON (plan.provider_id = prov.id);
+
+CREATE VIEW proxies_view AS
+    SELECT
+        proxy.id, proxy.url, proxy.active, CASE WHEN proxy.active THEN 'Yes' ELSE 'No' END active_desc,
+        proxy.proxy_type_id, ptype.name as "type_desc", proxy.proxy_location_id, ploc.name as "location_desc",
+        proxy.provider_id, pprov.name as "provider_name", proxy.provider_plan_id, pplan.name as "plan_desc",
+        proxy.dont_block
+    FROM
+        proxies proxy JOIN proxy_types ptype ON (proxy.proxy_type_id = ptype.id)
+                      JOIN proxy_locations ploc ON (proxy.proxy_location_id = ploc.id)
+                      JOIN providers pprov ON (proxy.provider_id = pprov.id)
+                      JOIN provider_plans pplan ON (proxy.provider_plan_id = pplan.id);

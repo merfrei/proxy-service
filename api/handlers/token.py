@@ -15,5 +15,5 @@ async def post_handler(request):
                                   'status': 'error'}, status=401)
     token = UserDB.generate_auth_token(params['username'])
     return web.json_response({'message': 'All OK',
-                              'data': {'token': token},
+                              'data': {'token': token.decode()},
                               'status': 'success'}, status=200)

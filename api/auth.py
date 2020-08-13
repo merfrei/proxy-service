@@ -60,13 +60,15 @@ async def basicauth_token_middleware(request, handler):
     authenticated = False
     message = FORBIDDEN_MESSAGE
 
+    user_db = UserDB(request.app)
+
     try:
-        token_data = UserDB.get_token_data(auth_h.login, auth_h.password)
+        token_data = user_db.get_token_data(auth_h.login, auth_h.password)
         authenticated = token_data['user'] == auth_h.login
     except SignatureExpired:
         message = 'Token expired'
     except BadSignature:
-        authenticated = await UserDB.verify_identity(auth_h.login, auth_h.password)
+        authenticated = await user_db.verify_identity(auth_h.login, auth_h.password)
 
     if not authenticated:
         return await get_403_response(message)

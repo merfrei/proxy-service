@@ -7,11 +7,12 @@ from api.handlers.base import get_base_post
 from api.handlers.base import get_base_put
 from api.handlers.base import get_base_delete
 from api.models.proxy import ProxyDB
+from api.models.proxy import ProxyView
 
 
 async def get_handler(request):
     '''GET one or more proxies'''
-    result = await get_base_get(ProxyDB)(request)
+    result = await get_base_get(ProxyView)(request)
     return result
 
 
