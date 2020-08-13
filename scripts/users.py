@@ -5,6 +5,8 @@ Manage users
 - Update password
 """
 
+import sys
+
 import asyncio
 import logging
 import argparse
@@ -52,15 +54,19 @@ async def main():
     args = parse_arguments()
 
     log_format = '%(levelname)s: %(asctime)s %(filename)s: %(message)s'
-    logging.basicConfig(stream=sys.stdout, level=getattr(logging, args.loglevel),
+    logging.basicConfig(stream=sys.stdout, level=logging.NOTSET,
                         format=log_format, datefmt='%Y-%m-%d %H:%M:%S')
 
     config = get_config()
     db_uri = config['database']['postgres']['uri']
-    async with DBSession(db_uri) as db_session
+    async with DBSession(db_uri) as db_session:
         if args.add_user:
             logging.info('Adding new user...')
             await add_user(db_session, *args.add_user.split(','))
         if args.update_user:
             logging.info('Updations user...')
             await set_password(db_session, *args.update_user.split(','))
+
+
+if __name__ == '__main__':
+    asyncio.get_event_loop().run_until_complete(main())

@@ -45,7 +45,7 @@ class UserDB(DBModel):
         return pwd_context.encrypt(password)
 
     @classmethod
-    def verify_identity(cls, username, password):
+    async def verify_identity(cls, username, password):
         '''Verify if the password `pwd` is valid'''
         user = await cls.get_user(username)
         if user is None:
@@ -53,7 +53,7 @@ class UserDB(DBModel):
         return pwd_context.verify(password, user['password'])
 
     @classmethod
-    def set_password(cls, username, password):
+    async def set_password(cls, username, password):
         '''Set a new password for the current user'''
         new_password = cls.password_hash(password)
         where = [('username', '=', username)]

@@ -161,7 +161,7 @@ async def main():
     args = parse_arguments()
 
     log_format = '%(levelname)s: %(asctime)s %(filename)s: %(message)s'
-    logging.basicConfig(stream=sys.stdout, level=getattr(logging, args.loglevel),
+    logging.basicConfig(stream=sys.stdout, level=logging.NOTSET,
                         format=log_format, datefmt='%Y-%m-%d %H:%M:%S')
 
     config = get_config()
@@ -174,8 +174,8 @@ async def main():
             logging.info('Adding plan: %s', args.plan)
             await add_new_plan(db_session, *args.plan.split(','))
         if args.proxy_type:
-            logging.info('Adding proxy plan: %s', args.proxy_plan)
-            await add_new_type(db_session, *args.proxy_plan.split(','))
+            logging.info('Adding proxy type: %s', args.proxy_type)
+            await add_new_type(db_session, *args.proxy_type.split(','))
         if args.proxy_loc:
             logging.info('Adding proxy location: %s', args.proxy_loc)
             await add_new_location(db_session, *args.proxy_loc.split(','))
@@ -183,7 +183,7 @@ async def main():
             logging.info('Importing TXT file: %s', args.proxy_txt)
             await import_proxy_list_txt(db_session,
                                         args.proxy_txt, args.proxy_txt_type,
-                                        args.proxy_txt_plan, args.proxy_txt_location)
+                                        args.proxy_txt_plan, args.proxy_txt_loc)
 
 
 if __name__ == '__main__':
