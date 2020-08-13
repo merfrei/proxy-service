@@ -39,6 +39,11 @@ class UserDB(DBModel):
             expires_in=app_config['security']['token_expires_in'])
         return serializer.dumps({'user': username})
 
+    @staticmethod
+    def password_hash(password):
+        '''Generate and return a hashed password'''
+        return pwd_context.encrypt(password)
+
     @classmethod
     def verify_identity(cls, username, password):
         '''Verify if the password `pwd` is valid'''
@@ -50,6 +55,6 @@ class UserDB(DBModel):
     @classmethod
     def set_password(cls, username, password):
         '''Set a new password for the current user'''
-        new_password = pwd_context.encrypt(password)
+        new_password = cls.password_hash(password)
         where = [('username', '=', username)]
         await cls.update('password', (new_password, ), *where)
