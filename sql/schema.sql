@@ -81,7 +81,7 @@ CREATE VIEW proxies_view AS
         proxy.provider_id, pprov.name as "provider_name", proxy.provider_plan_id, pplan.name as "plan_desc",
         proxy.dont_block
     FROM
-        proxies proxy JOIN proxy_types ptype ON (proxy.proxy_type_id = ptype.id)
-                      JOIN proxy_locations ploc ON (proxy.proxy_location_id = ploc.id)
-                      JOIN providers pprov ON (proxy.provider_id = pprov.id)
-                      JOIN provider_plans pplan ON (proxy.provider_plan_id = pplan.id);
+        proxies proxy LEFT JOIN proxy_types ptype ON (proxy.proxy_type_id = ptype.id)
+                      LEFT JOIN proxy_locations ploc ON (proxy.proxy_location_id = ploc.id)
+                      LEFT JOIN providers pprov ON (proxy.provider_id = pprov.id)
+                      LEFT JOIN provider_plans pplan ON (proxy.provider_plan_id = pplan.id);
