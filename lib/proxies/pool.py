@@ -68,6 +68,8 @@ class ProxyPool:
                 for blocked_id in added_ids:
                     await self.unblock_proxy(blocked_id)
         for proxy_id in available_ids:
+            if len(self.pool) >= self.pool_len:
+                break
             # Some previous filters can exclude proxies
             if proxy_id in proxy_map:
                 self.pool.append(proxy_map[proxy_id])
