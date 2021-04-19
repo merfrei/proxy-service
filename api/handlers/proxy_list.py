@@ -72,7 +72,7 @@ async def add_proxy_filter_to_where(request, where):
     await add_filter_if_not_none(request, ProxyLocationDB, 'loc', 'proxy_location_id', where)
     await add_filter_if_not_none(request, ProxyTypeDB, 'type', 'proxy_type_id', where)
     await add_filter_if_not_none(request, ProviderDB, 'prov', 'provider_id', where)
-    await add_filter_if_not_none(request, ProviderPlanDB, 'pan', 'provider_plan_id', where)
+    await add_filter_if_not_none(request, ProviderPlanDB, 'plan', 'provider_plan_id', where)
 
 
 async def add_target_constraints_to_where(request, target_id, where):
