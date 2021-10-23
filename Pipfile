@@ -6,6 +6,7 @@ name = "pypi"
 [dev-packages]
 pylint = "*"
 ipython = "*"
+autopep8 = "*"
 
 [requires]
 python_version = "3.7"
@@ -17,10 +18,5 @@ toml = "*"
 requests = "*"
 passlib = "*"
 itsdangerous = "*"
-
-[packages.aiohttp]
-extras = [ "speedups",]
-
-[packages.asyncpg-connect]
-git = "https://github.com/merfrei/asyncpg-connect.git"
-editable = true
+aiohttp = {extras = [ "speedups",]}
+asyncpg-connect = {git = "https://github.com/merfrei/asyncpg-connect.git", editable = true}
