@@ -24,6 +24,7 @@ COUNTRY_LOCATIONS = {
     'Luxembourg': 'LU',
     'United Kingdom': 'UK',
     'Netherlands': 'NL',
+    'Germany': 'DE',
 }
 
 
